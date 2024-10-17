@@ -1,0 +1,13 @@
+Create a Java class Bank that simulates basic banking operations. The class should allow users to:
+
+Withdraw money from their account, ensuring they don't withdraw more than their balance or an invalid amount.
+
+Deposit money, with validation for a valid deposit amount.
+
+Change the account holder's name, with proper validation for the new name.
+
+Request a passbook for the account.
+
+Display the current account details, including the account holder’s name, account number, and balance.
+
+Implement a simple menu-driven interface that allows users to interact with these features.
