@@ -1,47 +1,52 @@
 import java.util.*;
 import java.text.*;
-
 public class BillPrint {
-
-    void properName(String name) {
-        String arr[] = name.split(" ");
-        String fname = arr[0].toLowerCase();
-        String lname = arr[1].toLowerCase();
-    }
-
-    static String printTotal(Locale locale, double tot) {
-        // NumberFormat nf = new NumberFormat();
-        NumberFormat nf = NumberFormat.getCurrencyInstance(locale);
-        return nf.format(tot);
-    }
-
-    static String printDate(Locale locale) {
+    static void Bill(String name,String item_name, double price , int quantity,double tax,Locale lang,ResourceBundle rb){
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT,lang);
         Date date = new Date();
-        DateFormat dtf = DateFormat.getDateInstance(DateFormat.LONG, locale);
-        return dtf.format(date);
+        NumberFormat nf = NumberFormat.getCurrencyInstance(lang);
+        double tax_amount = (tax/100) * price * quantity;
+        System.out.println("-----------------------");
+        System.out.println(rb.getString("getGretting")+", "+ name);
+        System.out.println(rb.getString("getPurchased") + "  : " + quantity + " " +  item_name + " on " + df.format(date) );
+        System.out.println(rb.getString("getPrice")+ "  : " + nf.format(price * quantity));
+        System.out.println(rb.getString("getTaxAmount")+ "  : "+ nf.format(tax_amount));
+        System.out.println(rb.getString("getBeforeTax")+ "  : "+ nf.format((price * quantity - tax_amount)));
     }
+
 
     public static void main(String[] args) {
-        Locale locale = new Locale("hi", "IN");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter your name");
-        String userName = sc.nextLine();
-        userName.toCharArray();
-        (char)22
-        System.out.println("Product Name?");
-        String prodName = sc.nextLine();
-        System.out.println("Purchase Price?");
-        double price = sc.nextDouble();
-        System.out.println("Tax Paid in %?");
-        double tax = sc.nextDouble();
+        Scanner scan = new Scanner(System.in);
+        Locale lang;
+        ResourceBundle rb;
+        System.out.println("Enter your choice \n 1 for English \n 2 for Hindi \n 3 for Japanese");
+        int choice = scan.nextInt();
+        if(choice == 1){
+            lang = Locale.of("en","US");
+        }
+        else if(choice == 2){
+            lang = Locale.of("hi","IN");
+        }
+        else if(choice == 3){
+            lang = Locale.of("jp","JP");
+        }
+        else {
+            System.out.println("Invalid Choice. default using English");
+            lang = Locale.of("en", "US");
+        }
+        rb = ResourceBundle.getBundle("ResourceBundle", lang);
+        System.out.println(rb.getString("getName"));
+        scan.nextLine();
+        String name = scan.nextLine();
+        System.out.print(rb.getString("getProductName"));
+        String item = scan.nextLine();
+        System.out.print(rb.getString("getQuantity"));
+        int quantity = scan.nextInt();
+        System.out.print(rb.getString("getAmount"));
+        double price = scan.nextDouble();
+        System.out.print(rb.getString("getTax"));
+        double tax = scan.nextDouble();
 
-        double taxPaid = price * (tax / 100);
-        double netPrice = price - taxPaid;
-        //aKshiT DaGAr --> Akshit Dagar (Proper Case)
-        System.out.println("Hello, " + userName);
-        System.out.println("You have bought :" + prodName + " on " + printDate(locale));
-        System.out.println("Total Paid Price :" + printTotal(locale, price));
-        System.out.println("Net Paid Price :" + printTotal(locale, netPrice));
-        System.out.println("Tax Paid :" + printTotal(locale, taxPaid));
+        Bill(name,item,price,quantity,tax,lang,rb);
     }
 }
