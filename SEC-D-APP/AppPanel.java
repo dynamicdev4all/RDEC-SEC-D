@@ -1,7 +1,11 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -10,36 +14,27 @@ public class AppPanel extends JPanel {
     Timer timer;
     int x = 0;
     int y = 100;
-    Car car1;
-    Car car2;
-    Car car3;
 
     AppPanel() {
         setSize(500, 500);
         // setBackground(Color.BLUE);
-        // loadBgImage();
-        car1 = new Car(20, 420, 50, 30, "car.png", 2);
-        car2 = new Car(180, 420, 50, 30, "car.png", 5);
-        car3 = new Car(360, 420, 50, 30, "car.png", 7);
+        loadBgImage();
         keyBoardControls();
         appLoop();
         setFocusable(true);
     }
 
-    // void loadBgImage() {
-    // try {
-    // bgImage = ImageIO.read(AppPanel.class.getResource("car.png"));
-    // } catch (IOException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
+    void loadBgImage() {
+        try {
+            bgImage = ImageIO.read(AppPanel.class.getResource("ryu_sprite_sheet.png")).getSubimage(0, 0, 83, 106);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
     void appLoop() {
         timer = new Timer(30, (abc) -> {
-            car1.move();
-            car2.move();
-            car3.move();
             repaint();
         });
         timer.start();
@@ -79,9 +74,6 @@ public class AppPanel extends JPanel {
     protected void paintComponent(Graphics pen) {
         super.paintComponent(pen);
         // TODO Auto-generated method stub
-        // pen.drawImage(bgImage, x, y, 120, 120, null);
-        car1.paintImage(pen);
-        car2.paintImage(pen);
-        car3.paintImage(pen);
+        pen.drawImage(bgImage, x, y, 120, 120, null);
     }
 }
