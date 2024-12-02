@@ -10,34 +10,45 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class AppPanel extends JPanel {
-    BufferedImage bgImage;
     Timer timer;
     int x = 0;
     int y = 100;
+    int playerCount = 1;
+    int currentIndex = 0;
+    int currentX = 150;
+    Player player = new Player();
+
+    BufferedImage rightRunningImages[] = player.getRightRunImages();
 
     AppPanel() {
         setSize(500, 500);
         // setBackground(Color.BLUE);
-        loadBgImage();
+        // loadBgImage();
         keyBoardControls();
         appLoop();
         setFocusable(true);
     }
 
-    void loadBgImage() {
-        try {
-            bgImage = ImageIO.read(AppPanel.class.getResource("ryu_sprite_sheet.png")).getSubimage(0, 0, 83, 106);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
     void appLoop() {
-        timer = new Timer(30, (abc) -> {
+        timer = new Timer(80, (abc) -> {
+            if (currentIndex > 3) {
+                currentIndex = 0;
+            }
+            currentIndex++;
+            if (currentX > 500) {
+                currentX = -60;
+            }
+            currentX += 15;
             repaint();
         });
         timer.start();
+    }
+
+    void paintPlayer(Graphics pen) {
+        // for (int i = 0; i < rightRunningImages.length; i++) {
+        // System.out.println(i);
+        player.paintImage(pen, rightRunningImages[currentIndex], currentX);
+        // }
     }
 
     void keyBoardControls() {
@@ -74,6 +85,7 @@ public class AppPanel extends JPanel {
     protected void paintComponent(Graphics pen) {
         super.paintComponent(pen);
         // TODO Auto-generated method stub
-        pen.drawImage(bgImage, x, y, 120, 120, null);
+        // player.paintImage(pen);
+        paintPlayer(pen);
     }
 }
