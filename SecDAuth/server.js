@@ -2,22 +2,24 @@ const e = require("express");
 
 const app = e();
 
+const path = require("path");
+
+app.use(e.urlencoded({ extended: true }));
+
 app.get("/", (request, response) => {
-  //   console.log("This is the Root Route");
-  // response.send("This is the Root Route")
-  response.json({ name: "Shubham" });
+  response.sendFile(path.join(__dirname, "public", "index.html"));
 });
 app.get("/login", (request, response) => {
-  //   console.log("This is the Login Route");
-  response.send("This is the Login Route");
+  response.sendFile(path.join(__dirname, "public", "login.html"));
 });
-app.get("/logout", (request, response) => {
-  //   console.log("This is the Logout Route");
-  response.send("This is the Logout Route");
+app.get("/register", (request, response) => {
+  response.sendFile(path.join(__dirname, "public", "register.html"));
 });
-app.get("/password_reset", (request, response) => {
-  //   console.log("This is the Password Reset Route");
-  response.send("This is the Password Reset Route Route");
+app.post("/create-new-user", (request, response) => {
+  console.log(request.body);
+});
+app.post("/login-user", (request, response) => {
+  console.log("Login is here");
 });
 
 app.listen(9595, () => {
