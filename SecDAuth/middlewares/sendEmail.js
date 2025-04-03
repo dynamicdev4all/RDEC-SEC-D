@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const jwt = require('jsonwebtoken');
 const JWT_SECRET="this_is_top_secret"
 
-const sendMail = (email)=>{
+const sendMail = (email, userName)=>{
   const transport = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -11,9 +11,9 @@ const sendMail = (email)=>{
     },
   });
 
-  const token = jwt.sign({email:"dgfbd@gmail.com"},JWT_SECRET,{expiresIn:"10m"})
+  const token = jwt.sign({email},JWT_SECRET,{expiresIn:"5m"})
+  console.log(token)
 
-  // http://localhost:9595/register
 
   const verificationLink = `http://localhost:9595/verify-email?token=${token}`;
 
@@ -23,7 +23,19 @@ const sendMail = (email)=>{
     to: email ,
     subject: "Account Creation Success",
     text: "",
-    html:`<p>Congrats! your account has been created successfully. \nPlease click on the <a href=${verificationLink}>link</a> to verify your account \n \n Regards, \n Team RDEC.</p> <br><br><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR44QCVmeN2KCvKs9H1KBt_cvJZPZqAOaX5NA&s" alt="Image with red border" style="border: 5px solid red;">`
+    html:`<p style="font-family: Arial, sans-serif; font-size: 16px; color: #333; line-height: 1.5;">
+  <strong style="font-size: 18px; color: #4CAF50;">Congrats! ${userName}</strong> Your account has been created successfully.<br><br>
+  Please click on the <a href="${verificationLink}" style="color: #007bff; text-decoration: none; font-weight: bold;">link</a> to verify your account.<br><br>
+  <div style="margin-top: 20px;">
+    <p style="font-size: 14px; color: #666;">If you did not create an account, please ignore this message.</p>
+  </div>
+  <br>
+  <div style="font-size: 14px; color: #333;">
+    <p>Regards,</p>
+    <p style="font-weight: bold; color: #4CAF50;">Team RDEC</p>
+  </div>
+</p>
+`
   };
   
   transport.sendMail(mail, (err) => {

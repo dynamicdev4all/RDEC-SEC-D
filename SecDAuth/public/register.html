@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register Page</title>
 </head>
-<body>
-    <h1>Register Page</h1>
-    <form action="/create-new-user" method="post">
-        <label for="firstname">First Name :</label>
-        <input type="text" id="firstname" name="firstname">
-        <label for="lastname">Last Name :</label>
-        <input type="text" id="lastname" name="lastname">
-        <label for="email">Email Address :</label>
-        <input type="email" name="email" id="email">
-        <label for="password">Password :</label>
-        <input type="password" name="password" id="password">
-        <button type="submit">Register Now</button>
-    </form>
-   
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0;">
+    <div style="max-width: 450px; margin: 50px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h1 style="text-align: center; color: #333;">Register Page</h1>
+        <form action="/create-new-user" method="post" style="display: flex; flex-direction: column; gap: 15px;">
+            <label for="firstname" style="font-size: 16px; color: #555;">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required style="padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+            
+            <label for="lastname" style="font-size: 16px; color: #555;">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required style="padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+            
+            <label for="email" style="font-size: 16px; color: #555;">Email Address:</label>
+            <input type="email" name="email" id="email" required style="padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+            
+            <label for="password" style="font-size: 16px; color: #555;">Password:</label>
+            <input type="password" name="password" id="password" required style="padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+            
+            <button type="submit" style="background-color: #4CAF50; color: white; padding: 15px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+                Register Now
+            </button>
+        </form>
+    </div>
 </body>
 </html>

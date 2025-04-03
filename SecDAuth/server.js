@@ -1,7 +1,7 @@
 const e = require("express");
 const app = e();
 const path = require("path");
-const { userRegister, userLogin } = require("./controller/userController");
+const { userRegister, userLogin, emailVerification } = require("./controller/userController");
 const db = require("./config/databaseConn");
 db();
 app.use(e.urlencoded({ extended: true }));
@@ -18,6 +18,7 @@ app.get("/register", (request, response) => {
 app.get("/verify-email", (request, response) => {
   console.log("Token has been rec")
   console.log(request.query.token)
+  emailVerification(request.query.token)
 });
 app.post("/create-new-user", async (request, response) => {
   const { firstname, lastname, email, password } = request.body;
